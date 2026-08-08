@@ -41,5 +41,7 @@ func main() {
 	i, err := getImageFromFile(f)
 	h, w := getImageSize(i)
 
-	fmt.Printf("Width %d, Height %d, err %v", w, h, err)
+
+
+	fmt.Printf("Width %d, Height %d, err %v\n", w, h, err)
 }
