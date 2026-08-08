@@ -6,16 +6,22 @@ import (
 	"image"
 	"image/png"
 	"os"
+
+	"github.com/rebay1982/c64char/internal/config"
 )
 
-var (
-	filename *string
-)
+func parseFlags() config.Config {
+	cfg := config.Config{}
 
-func parseFlags() {
-	filename = flag.String("file", "", "Input filename")
+	f := flag.String("file", "", "Input filename")
+	e := flag.Bool("e", false, "Specify to encode a PNG to C64 data format")
 
 	flag.Parse()
+
+	cfg.Filename = *f
+	cfg.Encode = *e
+
+	return cfg
 }
 
 func getImageFromFile(f *os.File) (i image.Image, err error) {
@@ -33,15 +39,13 @@ func getImageSize(i image.Image) (w, h int) {
 }
 
 func main() {
-	parseFlags()
+	cfg := parseFlags()
 
-	f, _ := os.Open(*filename)
+	f, _ := os.Open(cfg.Filename)
 	defer f.Close()
 
 	i, err := getImageFromFile(f)
 	h, w := getImageSize(i)
-
-
 
 	fmt.Printf("Width %d, Height %d, err %v\n", w, h, err)
 }

@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 
-MAKEFLAGS += --silent
+#MAKEFLAGS += --silent
 
 fmt:
 	go fmt ./...
