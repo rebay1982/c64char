@@ -11,11 +11,8 @@ vet:
 tidy:
 	go mod tidy
 
-build: fmt vet
-	go build -v -o c64char ./cmd/c64char.go
+build: vet
+	go build -o c64char ./cmd/c64char.go
 
 test: build
-	go test -v ./...
-
-run: build
-	./c64char.go
+	go test -v -count=1 ./...
