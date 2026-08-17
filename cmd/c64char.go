@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"image"
-	"image/png"
+	_ "image/png"
 	"os"
 
 	"github.com/rebay1982/c64char/internal/config"
@@ -32,7 +32,7 @@ func parseFlags() config.Config {
 }
 
 func getImageFromFile(f *os.File) (i image.Image, err error) {
-	i, err = png.Decode(f)
+	i, _, err = image.Decode(f)
 
 	return
 }
