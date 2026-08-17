@@ -6,7 +6,7 @@ import (
 
 func validateSize(buf []uint8, w, h int) error {
 	l := len(buf)
-	
+
 	// Buffer length, width and height HAVE to be multiples of 8.
 	if l & 0x7 > 0 {
 		return fmt.Errorf("invalid image buffer size %d, has to be multiple of 8.", l)
