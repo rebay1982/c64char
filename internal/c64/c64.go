@@ -23,7 +23,7 @@ func validateSize(buf []uint8, w, h int) error {
 	return nil
 }
 
-func isPixelLit(p uint32) bool {
+func isPixelOn(p uint32) bool {
 	// Pixels need to be packed as following:
 	//   p := dst.Pix(0) << 24 | dst.Pix(1) << 16 | dst.Pix(2) << 8 | dst.Pix(3).
 
