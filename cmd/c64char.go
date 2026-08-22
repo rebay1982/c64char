@@ -41,18 +41,36 @@ func getImageFromFile(f *os.File) (i image.Image, err error) {
 func main() {
 	cfg := parseFlags()
 
-	f, _ := os.Open(cfg.Filename)
-	defer f.Close()
+	if cfg.Encode {
+		f, _ := os.Open(cfg.Filename)
+		defer f.Close()
 
-	i, err := getImageFromFile(f)
-	if err != nil {
-		fmt.Printf("unable to load image from file. %v\n", err)
-		os.Exit(1)
+		i, err := getImageFromFile(f)
+		if err != nil {
+			fmt.Printf("unable to load image from file. %v\n", err)
+			os.Exit(1)
+		}
+
+		buf, w, h := img.ImageToRGBA(i)
+		data, err := c64.Encode(buf, w, h)
+
+		if err != nil {
+			fmt.Printf("unable to encode image from file. %v\n", err)
+			os.Exit(1)
+		}
+
+		nbBlocks := len(data) >> 3
+		for i := range nbBlocks {
+			fmt.Printf("; block %d\n", i)
+
+			for j := range 8 {
+				b := data[(i << 3) + j] 
+
+			//	fmt.Printf("!byte %%b\n", b)
+			}
+		}
+
+	} else {
+		fmt.Println("Decoding is not implemented yet, exiting...")
 	}
-
-	buf, w, h := img.ImageToRGBA(i)
-	fmt.Printf("output: %d, %d, %d", len(buf), w, h)
-
-	data, err := c64.Encode(buf, w, h)
-	fmt.Printf("output: %d, %d, %d", len(data), w, h)
 }
