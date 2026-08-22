@@ -11,7 +11,7 @@ vet:
 tidy:
 	go mod tidy
 
-build: fmt vet
+build: vet
 	go build -v -o c64char ./cmd/c64char.go
 
 test: build

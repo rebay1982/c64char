@@ -11,20 +11,22 @@ func Encode(buf []uint8, w, h int) ([]byte, error) {
 	output := []byte{}
 
 	// Cycle over X, Y cells.
-	for cY := 0; cY <= cellsY; cY++ {
-		for cX := 0; cX <= cellsX; cX++ {
+	for cY := range cellsY { // Cells (rows)
+		for cX := range cellsX { // Cells (columns)
 
 			for py := range 8 {
 				var out byte // Output byte
 
 				for px := range 8 {
-					x := (cellsX<<3 + px) << 2
-					y := ((cellsY<<3 + py) << 2) * w
+					x := (cX<<3 + px)
+					y := (cY<<3 + py)
 
-					pixel := uint32(buf[x+y])
-					pixel |= uint32(buf[x+y+1]) << 8
-					pixel |= uint32(buf[x+y+2]) << 16
-					pixel |= uint32(buf[x+y+3]) << 24
+					bpos := (y*w + x) << 2
+
+					pixel := uint32(buf[bpos])
+					pixel |= uint32(buf[bpos+1]) << 8
+					pixel |= uint32(buf[bpos+2]) << 16
+					pixel |= uint32(buf[bpos+3]) << 24
 
 					if isPixelOn(pixel) {
 						out |= 1 << (7 - px)
