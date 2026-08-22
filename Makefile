@@ -12,10 +12,10 @@ tidy:
 	go mod tidy
 
 build: vet
-	go build -v -o c64char ./cmd/c64char.go
+	go build -o c64char ./cmd/c64char.go
 
 test: build
-	go test -v ./...
+	go test -v -count=1 ./...
 
 run: build
 	./c64char.go

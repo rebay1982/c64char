@@ -7,7 +7,7 @@ import (
 	_ "image/png"
 	"os"
 
-	//"github.com/rebay1982/c64char/internal/c64"
+	"github.com/rebay1982/c64char/internal/c64"
 	"github.com/rebay1982/c64char/internal/config"
 	"github.com/rebay1982/c64char/internal/img"
 )
@@ -53,6 +53,6 @@ func main() {
 	buf, w, h := img.ImageToRGBA(i)
 	fmt.Printf("output: %d, %d, %d", len(buf), w, h)
 
-	//data, err := c64.Encode(buf, w, h)
-	//fmt.Printf("output: %d, %d, %d", len(data), w, h)
+	data, err := c64.Encode(buf, w, h)
+	fmt.Printf("output: %d, %d, %d", len(data), w, h)
 }
