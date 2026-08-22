@@ -10,6 +10,7 @@ func Test_pet(t *testing.T) {
 		name        string
 		buf         []uint8
 		w, h        int
+		expected    []uint8
 		expectError bool
 	}{
 		{
@@ -26,6 +27,16 @@ func Test_pet(t *testing.T) {
 			},
 			w:           8,
 			h:           8,
+			expected: []byte{
+				0b01010101,
+				0b01010101,
+				0b01010101,
+				0b01010101,
+				0b01010101,
+				0b01010101,
+				0b01010101,
+				0b01010101,
+			},
 			expectError: false,
 		},
 		//{
@@ -67,8 +78,16 @@ func Test_pet(t *testing.T) {
 				t.Fatalf("did not expect an error, got an error")
 			}
 
-			if len(b) == 0 {
-				t.Fatal("cac, esti.")
+			if len(b) != len(tc.expected) {
+				t.Fatalf("expected %d length, got %d length", len(b), len(tc.expected))
+			}
+
+			for i, e := range tc.expected {
+				g := b[i]
+
+				if g != e {
+					t.Fatalf("expected %d value at %d, got %d", e, i, g)
+				}
 			}
 		})
 	}
