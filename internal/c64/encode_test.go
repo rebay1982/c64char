@@ -14,6 +14,27 @@ func Test_pet(t *testing.T) {
 		expectError bool
 	}{
 		{
+			name: "empty_image",
+			buf: []byte{
+			},
+			w:           0,
+			h:           0,
+			expected: []byte{
+			},
+			expectError: false,
+		},
+		{
+			name: "wrong_size",
+			buf: []byte{
+				0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
+				0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
+			},
+			w:           4,
+			h:           4,
+			expected: []byte{},
+			expectError: true,
+		},
+		{
 			name: "single_block",
 			buf: []byte{
 				0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
@@ -140,7 +161,7 @@ func Test_pet(t *testing.T) {
 			}
 
 			if len(b) != len(tc.expected) {
-				t.Fatalf("expected %d length, got %d length", len(b), len(tc.expected))
+				t.Fatalf("expected %d length, got %d length", len(tc.expected), len(b))
 			}
 
 			for i, e := range tc.expected {
