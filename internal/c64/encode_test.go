@@ -4,8 +4,7 @@ import (
 	"testing"
 )
 
-// var buf =
-func Test_pet(t *testing.T) {
+func TestEncode(t *testing.T) {
 	testCases := []struct {
 		name        string
 		buf         []uint8

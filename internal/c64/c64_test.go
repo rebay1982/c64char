@@ -25,6 +25,13 @@ func Test_IsValidSize(t *testing.T) {
 			h:           10,
 			expectError: true,
 		},
+		{
+			name:        "10x10",
+			buf:         make([]uint8, 8*8*4),
+			w:           10,
+			h:           10,
+			expectError: true,
+		},
 	}
 
 	for _, tc := range testCases {

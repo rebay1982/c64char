@@ -16,19 +16,12 @@ import (
 func parseFlags() config.Config {
 	cfg := config.Config{}
 
-	f := flag.String("file", "", "Input filename.")
-	e := flag.Bool("e", true, "Specify to encode a PNG to C64 data format.")
-	d := flag.Bool("d", false, "Specify to decode C64 data format to PNG.")
+	f := flag.String("f", "", "Image filename.")
 
 	flag.Parse()
 
 	cfg.Filename = *f
-	cfg.Encode = *e
-
-	// Decode explicitly specified takes precedense on the default encoding behaviour.
-	if *d {
-		cfg.Encode = !*d
-	}
+	cfg.Encode = true				// Default until the decode function is  implemented.
 
 	return cfg
 }
@@ -56,7 +49,11 @@ func main() {
 }
 
 func Encode(c config.Config) (string, error) {
-	f, _ := os.Open(c.Filename)
+	f, err := os.Open(c.Filename)
+	if err != nil {
+		fmt.Printf("unable to open specified image file %s. %v\n", c.Filename, err)
+		return "", err
+	}
 	defer f.Close()
 
 	i, err := getImageFromFile(f)

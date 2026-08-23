@@ -8,7 +8,7 @@ func Encode(buf []uint8, w, h int) ([]byte, error) {
 
 	cellsX := w >> 3
 	cellsY := h >> 3
-	output := []byte{}
+	output := make([]byte, 0, cellsX*cellsY*8)
 
 	// Cycle over X, Y cells.
 	for cY := range cellsY { // Cells (rows)
