@@ -32,6 +32,12 @@ bytes: 7E 81 99 99 99 99 81 7E
 
 ## Installation
 
+The only requirement is Go 1.26. Run the following command in your shell:
+
+```bash
+go install github.com/rebay1982/c64char@latest
+```
+
 ## Usage
 
 Simply specify the filename using the `-f` flag and `c64char` will output the conversion to the console.
