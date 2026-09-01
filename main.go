@@ -21,7 +21,9 @@ func parseFlags() config.Config {
 	flag.Parse()
 
 	cfg.Filename = *f
-	cfg.Encode = true				// Default until the decode function is  implemented.
+
+	// Default until the decode function is  implemented.
+	cfg.Encode = true
 
 	return cfg
 }

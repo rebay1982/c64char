@@ -61,7 +61,7 @@ Usage of c64char:
 
 ## Input
 
-The tool expects images in the following specifications:
+The tool accepts images with the following properties:
  - JPEG or PNG;
  - dimensions divisible by 8;
 
@@ -73,7 +73,7 @@ Pixels are interpreted as being set when their value (either red, green, or blue
 zero. Alpha channels from the source image file are completely ignored.
 
 **NOTE**: Usage of JPEG is usually fine, but compression artifacts can cause pixels to be detected as "set". PNG would
-ge the preferred format.
+be the preferred format.
 
 ### Source document traversal order
 
