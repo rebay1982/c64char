@@ -6,6 +6,7 @@ import (
 	"image"
 	_ "image/png"
 	"os"
+	"runtime/debug"
 
 	"github.com/rebay1982/c64char/internal/c64"
 	"github.com/rebay1982/c64char/internal/config"
@@ -17,13 +18,14 @@ func parseFlags() config.Config {
 	cfg := config.Config{}
 
 	f := flag.String("f", "", "Image filename.")
+	v := flag.Bool("v", false, "Show version and exit.")
 
 	flag.Parse()
 
-	cfg.Filename = *f
-
 	// Default until the decode function is  implemented.
 	cfg.Encode = true
+	cfg.Filename = *f
+	cfg.ShowVersion = *v
 
 	return cfg
 }
@@ -34,23 +36,7 @@ func getImageFromFile(f *os.File) (i image.Image, err error) {
 	return
 }
 
-func main() {
-	cfg := parseFlags()
-
-	if cfg.Encode {
-		if o, err := Encode(cfg); err != nil {
-			os.Exit(1)
-
-		} else {
-			fmt.Print(o)
-		}
-
-	} else {
-		fmt.Println("Decoding is not implemented yet, exiting...")
-	}
-}
-
-func Encode(c config.Config) (string, error) {
+func encode(c config.Config) (string, error) {
 	f, err := os.Open(c.Filename)
 	if err != nil {
 		fmt.Printf("unable to open specified image file %s. %v\n", c.Filename, err)
@@ -74,4 +60,34 @@ func Encode(c config.Config) (string, error) {
 	o := formatter.Output(data)
 
 	return o, nil
+}
+
+func getVersion() string {
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return "unknown"
+	}
+
+	return info.Main.Version
+}
+
+func main() {
+	cfg := parseFlags()
+
+	if cfg.ShowVersion {
+		fmt.Printf("version: %s\n", getVersion())
+		os.Exit(0)
+	}
+
+	if cfg.Encode {
+		if o, err := encode(cfg); err != nil {
+			os.Exit(1)
+
+		} else {
+			fmt.Print(o)
+		}
+
+	} else {
+		fmt.Println("Decoding is not implemented yet, exiting...")
+	}
 }
