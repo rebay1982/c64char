@@ -17,15 +17,14 @@ func parseFlags() config.Config {
 	cfg := config.Config{}
 
 	f := flag.String("f", "", "Image filename.")
-	//v := flag.String("v", nil, "Show version")
-	//version = flag.Bool("v")
+	v := flag.Bool("v", false, "Show version and exit.")
 
 	flag.Parse()
 
-	cfg.Filename = *f
-
 	// Default until the decode function is  implemented.
 	cfg.Encode = true
+	cfg.Filename = *f
+	cfg.ShowVersion = *v
 
 	return cfg
 }
@@ -38,6 +37,10 @@ func getImageFromFile(f *os.File) (i image.Image, err error) {
 
 func main() {
 	cfg := parseFlags()
+
+	if cfg.ShowVersion {
+		// Show version and GTFO.
+	}
 
 	if cfg.Encode {
 		if o, err := Encode(cfg); err != nil {

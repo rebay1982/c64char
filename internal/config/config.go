@@ -1,7 +1,7 @@
 package config
 
 type Config struct {
-	Filename string
-	//ShowVersion bool
 	Encode   bool
+	Filename string
+	ShowVersion bool
 }
