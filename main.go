@@ -17,6 +17,8 @@ func parseFlags() config.Config {
 	cfg := config.Config{}
 
 	f := flag.String("f", "", "Image filename.")
+	//v := flag.String("v", nil, "Show version")
+	//version = flag.Bool("v")
 
 	flag.Parse()
 
